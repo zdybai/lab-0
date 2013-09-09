@@ -23,10 +23,6 @@ public class StackTest{
     public void checkEmptyStackException() throws StackOverflowException{
         exception.expect(EmptyStackException.class);
         stack.pop();
-        stack.push(1);
-        stack.pop();
-        exception.expect(EmptyStackException.class);
-        stack.pop();
     }
 
     @Test
