@@ -1,28 +1,55 @@
 package com.epampractice.lab0;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: JavaCoder
- * Date: 08.09.13
- * Time: 4:32
- * To change this template use File | Settings | File Templates.
- */
-public class StackTest {
+import java.util.EmptyStackException;
+
+import static org.junit.Assert.assertEquals;
+
+
+public class StackTest{
+
+    private Stack stack;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        stack = new Stack();
+    }
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void checkEmptyStackException() throws StackOverflowException{
+        exception.expect(EmptyStackException.class);
+        stack.pop();
+        stack.push(1);
+        stack.pop();
+        exception.expect(EmptyStackException.class);
+        stack.pop();
     }
 
     @Test
-    public void testPush() throws Exception {
-
+    public void checkStackOverflowException() throws StackOverflowException {
+        stack = new Stack();
+        for (int i = 0; i < 5; i++) {
+            stack.push(i);
+        }
+        exception.expect(StackOverflowException.class);
+        stack.push(5);
     }
 
     @Test
-    public void testPop() throws Exception {
-
+    public void testStackWork() throws StackOverflowException {
+        stack = new Stack();
+        stack.push(1);
+        int value = stack.pop();
+        assertEquals(value, 1);
+        stack.push(2);
+        stack.push(3);
+        value = stack.pop();
+        assertEquals(value, 3);
+        value = stack.pop();
+        assertEquals(value, 2);
     }
 }
